@@ -99,10 +99,12 @@ namespace MultipleRobloxInstances
         {
             _isDark = !_isDark;
             var map = _isDark ? DarkColors : LightColors;
+            // Replace (not mutate) the shared brushes: WPF freezes app-resource brushes
+            // when they are referenced, so setting .Color throws InvalidOperationException.
+            // Replacing the resource re-resolves every {DynamicResource} consumer.
             foreach (var kv in map)
             {
-                if (Application.Current.Resources[kv.Key] is SolidColorBrush b)
-                    b.Color = kv.Value;
+                Application.Current.Resources[kv.Key] = new SolidColorBrush(kv.Value);
             }
         }
 
