@@ -4,6 +4,35 @@
              xmlns:local="clr-namespace:MultipleRobloxInstances"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <!-- Lumina Light Theme (default) — MainWindow.ThemeToggleBtn_Click swaps brush colors live -->
+        <SolidColorBrush x:Key="BrushShellBg" Color="#F9FAFB"/>
+        <SolidColorBrush x:Key="BrushSurface" Color="#F9F9FF"/>
+        <SolidColorBrush x:Key="BrushCard" Color="#FFFFFF"/>
+        <SolidColorBrush x:Key="BrushGlass" Color="#F7FFFFFF"/>
+        <SolidColorBrush x:Key="BrushTextPrimary" Color="#141B2B"/>
+        <SolidColorBrush x:Key="BrushTextSecondary" Color="#464554"/>
+        <SolidColorBrush x:Key="BrushTextMuted" Color="#767586"/>
+        <SolidColorBrush x:Key="BrushMonoFooter" Color="#516072"/>
+        <SolidColorBrush x:Key="BrushMonoStatus" Color="#43474B"/>
+        <SolidColorBrush x:Key="BrushBorderOutline" Color="#C7C4D7"/>
+        <SolidColorBrush x:Key="BrushBorderVariant" Color="#DCE2F7"/>
+        <SolidColorBrush x:Key="BrushCardBorder" Color="#F1F5F9"/>
+        <SolidColorBrush x:Key="BrushNavActiveBg" Color="#D2E1F7"/>
+        <SolidColorBrush x:Key="BrushNavActiveText" Color="#556477"/>
+        <SolidColorBrush x:Key="BrushNavHover" Color="#E1E8FD"/>
+        <SolidColorBrush x:Key="BrushRowHover" Color="#F1F3FF"/>
+        <SolidColorBrush x:Key="BrushAccent" Color="#4648D4"/>
+        <SolidColorBrush x:Key="BrushAccentHover" Color="#3B3DCB"/>
+        <SolidColorBrush x:Key="BrushPrimaryContainer" Color="#6063EE"/>
+        <SolidColorBrush x:Key="BrushPrimaryContainerBg" Color="#EDEDFC"/>
+        <SolidColorBrush x:Key="BrushPillBg" Color="#E9EDFF"/>
+        <SolidColorBrush x:Key="BrushPillBorder" Color="#DCE2F7"/>
+        <SolidColorBrush x:Key="BrushChipBg" Color="#DCE2F7"/>
+        <SolidColorBrush x:Key="BrushError" Color="#BA1A1A"/>
+        <SolidColorBrush x:Key="BrushErrorContainer" Color="#FFDAD6"/>
+        <SolidColorBrush x:Key="BrushStatusGreen" Color="#10B981"/>
+        <SolidColorBrush x:Key="BrushScrollThumb" Color="#DCE2F7"/>
+        <SolidColorBrush x:Key="BrushIcon" Color="#767586"/>
+        <SolidColorBrush x:Key="BrushTextOnAccent" Color="#FFFFFF"/>
     </Application.Resources>
 </Application>

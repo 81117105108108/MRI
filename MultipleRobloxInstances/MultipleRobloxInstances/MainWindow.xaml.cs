@@ -1,6 +1,7 @@
 using MultipleRobloxInstances.Resources;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
@@ -53,6 +54,66 @@ namespace MultipleRobloxInstances
         private int _shutdownComplete;
         private int _shutdownCtsDisposed;
         private int _shutdownDrainStarted;
+
+        // -------- Theme engine (light "Lumina" / dark) --------
+        private static readonly Dictionary<string, Color> LightColors = new()
+        {
+            ["BrushShellBg"]=Color.FromRgb(0xF9,0xFA,0xFB), ["BrushSurface"]=Color.FromRgb(0xF9,0xF9,0xFF),
+            ["BrushCard"]=Color.FromRgb(0xFF,0xFF,0xFF), ["BrushGlass"]=Color.FromArgb(0xF7,0xFF,0xFF,0xFF),
+            ["BrushTextPrimary"]=Color.FromRgb(0x14,0x1B,0x2B), ["BrushTextSecondary"]=Color.FromRgb(0x46,0x45,0x54),
+            ["BrushTextMuted"]=Color.FromRgb(0x76,0x75,0x86), ["BrushMonoFooter"]=Color.FromRgb(0x51,0x60,0x72),
+            ["BrushMonoStatus"]=Color.FromRgb(0x43,0x47,0x4B), ["BrushBorderOutline"]=Color.FromRgb(0xC7,0xC4,0xD7),
+            ["BrushBorderVariant"]=Color.FromRgb(0xDC,0xE2,0xF7), ["BrushCardBorder"]=Color.FromRgb(0xF1,0xF5,0xF9),
+            ["BrushNavActiveBg"]=Color.FromRgb(0xD2,0xE1,0xF7), ["BrushNavActiveText"]=Color.FromRgb(0x55,0x64,0x77),
+            ["BrushNavHover"]=Color.FromRgb(0xE1,0xE8,0xFD), ["BrushRowHover"]=Color.FromRgb(0xF1,0xF3,0xFF),
+            ["BrushAccent"]=Color.FromRgb(0x46,0x48,0xD4), ["BrushAccentHover"]=Color.FromRgb(0x3B,0x3D,0xCB),
+            ["BrushPrimaryContainer"]=Color.FromRgb(0x60,0x63,0xEE), ["BrushPrimaryContainerBg"]=Color.FromRgb(0xED,0xED,0xFC),
+            ["BrushPillBg"]=Color.FromRgb(0xE9,0xED,0xFF), ["BrushPillBorder"]=Color.FromRgb(0xDC,0xE2,0xF7),
+            ["BrushChipBg"]=Color.FromRgb(0xDC,0xE2,0xF7), ["BrushError"]=Color.FromRgb(0xBA,0x1A,0x1A),
+            ["BrushErrorContainer"]=Color.FromRgb(0xFF,0xDA,0xD6), ["BrushStatusGreen"]=Color.FromRgb(0x10,0xB9,0x81),
+            ["BrushScrollThumb"]=Color.FromRgb(0xDC,0xE2,0xF7), ["BrushIcon"]=Color.FromRgb(0x76,0x75,0x86),
+            ["BrushTextOnAccent"]=Color.FromRgb(0xFF,0xFF,0xFF)
+        };
+
+        private static readonly Dictionary<string, Color> DarkColors = new()
+        {
+            ["BrushShellBg"]=Color.FromRgb(0x12,0x14,0x1C), ["BrushSurface"]=Color.FromRgb(0x17,0x19,0x23),
+            ["BrushCard"]=Color.FromRgb(0x1E,0x21,0x30), ["BrushGlass"]=Color.FromArgb(0xF7,0x1E,0x21,0x30),
+            ["BrushTextPrimary"]=Color.FromRgb(0xE9,0xE9,0xF4), ["BrushTextSecondary"]=Color.FromRgb(0xB9,0xB8,0xC8),
+            ["BrushTextMuted"]=Color.FromRgb(0x8A,0x8A,0x9C), ["BrushMonoFooter"]=Color.FromRgb(0x8A,0x8A,0x9C),
+            ["BrushMonoStatus"]=Color.FromRgb(0x9A,0x9A,0xAC), ["BrushBorderOutline"]=Color.FromRgb(0x3A,0x3D,0x4E),
+            ["BrushBorderVariant"]=Color.FromRgb(0x2A,0x2D,0x3D), ["BrushCardBorder"]=Color.FromRgb(0x26,0x29,0x38),
+            ["BrushNavActiveBg"]=Color.FromRgb(0x2E,0x33,0x50), ["BrushNavActiveText"]=Color.FromRgb(0xC5,0xC9,0xE8),
+            ["BrushNavHover"]=Color.FromRgb(0x23,0x27,0x3A), ["BrushRowHover"]=Color.FromRgb(0x23,0x27,0x3A),
+            ["BrushAccent"]=Color.FromRgb(0x7C,0x7F,0xF2), ["BrushAccentHover"]=Color.FromRgb(0x8E,0x91,0xF5),
+            ["BrushPrimaryContainer"]=Color.FromRgb(0x8E,0x91,0xF5), ["BrushPrimaryContainerBg"]=Color.FromRgb(0x2A,0x2D,0x4A),
+            ["BrushPillBg"]=Color.FromRgb(0x23,0x2A,0x34), ["BrushPillBorder"]=Color.FromRgb(0x33,0x3A,0x48),
+            ["BrushChipBg"]=Color.FromRgb(0x2A,0x2D,0x3D), ["BrushError"]=Color.FromRgb(0xFF,0x8A,0x80),
+            ["BrushErrorContainer"]=Color.FromRgb(0x4A,0x23,0x26), ["BrushStatusGreen"]=Color.FromRgb(0x10,0xB9,0x81),
+            ["BrushScrollThumb"]=Color.FromRgb(0x3A,0x3D,0x4E), ["BrushIcon"]=Color.FromRgb(0x8A,0x8A,0x9C),
+            ["BrushTextOnAccent"]=Color.FromRgb(0xFF,0xFF,0xFF)
+        };
+
+        private bool _isDark;
+        private void ThemeToggleBtn_Click(object sender, RoutedEventArgs e)
+        {
+            _isDark = !_isDark;
+            var map = _isDark ? DarkColors : LightColors;
+            foreach (var kv in map)
+            {
+                if (Application.Current.Resources[kv.Key] is SolidColorBrush b)
+                    b.Color = kv.Value;
+            }
+        }
+
+        private static SolidColorBrush ThemeBrush(string key)
+        {
+            if (Application.Current.Resources[key] is SolidColorBrush themeBrush)
+            {
+                return themeBrush;
+            }
+            return new SolidColorBrush(LightColors[key]);
+        }
 
         private bool IsShuttingDown => Volatile.Read(ref _isShuttingDown) != 0;
 
@@ -1287,13 +1348,13 @@ namespace MultipleRobloxInstances
             InstancesView.Visibility = Visibility.Visible;
             InstructionsView.Visibility = Visibility.Collapsed;
 
-            InstancesTabBtn.Background = new SolidColorBrush(Color.FromRgb(0xD2, 0xE1, 0xF7));
-            InstancesTabBtn.Foreground = new SolidColorBrush(Color.FromRgb(0x55, 0x64, 0x77));
-            InstancesTabBtn.BorderBrush = new SolidColorBrush(Color.FromRgb(0x46, 0x48, 0xD4));
+            InstancesTabBtn.Background = ThemeBrush("BrushNavActiveBg");
+            InstancesTabBtn.Foreground = ThemeBrush("BrushNavActiveText");
+            InstancesTabBtn.BorderBrush = ThemeBrush("BrushAccent");
             InstancesTabBtn.BorderThickness = new Thickness(4, 0, 0, 0);
 
             InstructionsTabBtn.Background = Brushes.Transparent;
-            InstructionsTabBtn.Foreground = new SolidColorBrush(Color.FromRgb(0x46, 0x45, 0x54));
+            InstructionsTabBtn.Foreground = ThemeBrush("BrushTextSecondary");
             InstructionsTabBtn.BorderBrush = Brushes.Transparent;
             InstructionsTabBtn.BorderThickness = new Thickness(4, 0, 0, 0);
         }
@@ -1303,13 +1364,13 @@ namespace MultipleRobloxInstances
             InstancesView.Visibility = Visibility.Collapsed;
             InstructionsView.Visibility = Visibility.Visible;
 
-            InstructionsTabBtn.Background = new SolidColorBrush(Color.FromRgb(0xD2, 0xE1, 0xF7));
-            InstructionsTabBtn.Foreground = new SolidColorBrush(Color.FromRgb(0x55, 0x64, 0x77));
-            InstructionsTabBtn.BorderBrush = new SolidColorBrush(Color.FromRgb(0x46, 0x48, 0xD4));
+            InstructionsTabBtn.Background = ThemeBrush("BrushNavActiveBg");
+            InstructionsTabBtn.Foreground = ThemeBrush("BrushNavActiveText");
+            InstructionsTabBtn.BorderBrush = ThemeBrush("BrushAccent");
             InstructionsTabBtn.BorderThickness = new Thickness(4, 0, 0, 0);
 
             InstancesTabBtn.Background = Brushes.Transparent;
-            InstancesTabBtn.Foreground = new SolidColorBrush(Color.FromRgb(0x46, 0x45, 0x54));
+            InstancesTabBtn.Foreground = ThemeBrush("BrushTextSecondary");
             InstancesTabBtn.BorderBrush = Brushes.Transparent;
             InstancesTabBtn.BorderThickness = new Thickness(4, 0, 0, 0);
         }

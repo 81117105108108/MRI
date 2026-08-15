@@ -19,7 +19,7 @@
         <!-- Sidebar Nav Item Style -->
         <Style x:Key="SidebarNavItemStyle" TargetType="{x:Type Button}">
             <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="Foreground" Value="#464554"/>
+            <Setter Property="Foreground" Value="{DynamicResource BrushTextSecondary}"/>
             <Setter Property="BorderBrush" Value="Transparent"/>
             <Setter Property="BorderThickness" Value="4,0,0,0"/>
             <Setter Property="FontFamily" Value="Inter, Segoe UI"/>
@@ -42,8 +42,8 @@
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="navBorder" Property="Background" Value="#E1E8FD"/>
-                                <Setter Property="Foreground" Value="#141B2B"/>
+                                <Setter TargetName="navBorder" Property="Background" Value="{DynamicResource BrushNavHover}"/>
+                                <Setter Property="Foreground" Value="{DynamicResource BrushTextPrimary}"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -54,8 +54,8 @@
         <!-- Sidebar Terminate All Button Style -->
         <Style x:Key="SidebarTerminateAllStyle" TargetType="{x:Type Button}">
             <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="Foreground" Value="#141B2B"/>
-            <Setter Property="BorderBrush" Value="#C7C4D7"/>
+            <Setter Property="Foreground" Value="{DynamicResource BrushTextPrimary}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource BrushBorderOutline}"/>
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="FontFamily" Value="Inter, Segoe UI"/>
             <Setter Property="FontSize" Value="12"/>
@@ -83,9 +83,9 @@
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="btnBorder" Property="Background" Value="#F1F3FF"/>
-                                <Setter Property="Foreground" Value="#4648D4"/>
-                                <Setter TargetName="btnBorder" Property="BorderBrush" Value="#4648D4"/>
+                                <Setter TargetName="btnBorder" Property="Background" Value="{DynamicResource BrushRowHover}"/>
+                                <Setter Property="Foreground" Value="{DynamicResource BrushAccent}"/>
+                                <Setter TargetName="btnBorder" Property="BorderBrush" Value="{DynamicResource BrushAccent}"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -95,9 +95,9 @@
 
         <!-- Refresh Button Style -->
         <Style x:Key="RefreshButtonStyle" TargetType="{x:Type Button}">
-            <Setter Property="Background" Value="#FFFFFF"/>
-            <Setter Property="Foreground" Value="#516072"/>
-            <Setter Property="BorderBrush" Value="#C7C4D7"/>
+            <Setter Property="Background" Value="{DynamicResource BrushCard}"/>
+            <Setter Property="Foreground" Value="{DynamicResource BrushMonoFooter}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource BrushBorderOutline}"/>
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="FontFamily" Value="Inter, Segoe UI"/>
             <Setter Property="FontSize" Value="12"/>
@@ -124,7 +124,7 @@
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="btnBorder" Property="Background" Value="#F1F3FF"/>
+                                <Setter TargetName="btnBorder" Property="Background" Value="{DynamicResource BrushRowHover}"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -135,7 +135,7 @@
         <!-- Window Control Button Styles -->
         <Style x:Key="WindowControlButtonStyle" TargetType="{x:Type Button}">
             <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="Foreground" Value="#767586"/>
+            <Setter Property="Foreground" Value="{DynamicResource BrushIcon}"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="FontFamily" Value="Segoe UI"/>
             <Setter Property="FontSize" Value="13"/>
@@ -153,8 +153,8 @@
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="wndBorder" Property="Background" Value="#E1E8FD"/>
-                                <Setter Property="Foreground" Value="#141B2B"/>
+                                <Setter TargetName="wndBorder" Property="Background" Value="{DynamicResource BrushNavHover}"/>
+                                <Setter Property="Foreground" Value="{DynamicResource BrushTextPrimary}"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -174,8 +174,8 @@
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="wndBorder" Property="Background" Value="#FFDAD6"/>
-                                <Setter Property="Foreground" Value="#BA1A1A"/>
+                                <Setter TargetName="wndBorder" Property="Background" Value="{DynamicResource BrushErrorContainer}"/>
+                                <Setter Property="Foreground" Value="{DynamicResource BrushError}"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -199,7 +199,7 @@
                                             <Thumb>
                                                 <Thumb.Template>
                                                     <ControlTemplate TargetType="{x:Type Thumb}">
-                                                        <Border Background="#DCE2F7" CornerRadius="4"/>
+                                                        <Border Background="{DynamicResource BrushBorderVariant}" CornerRadius="4"/>
                                                     </ControlTemplate>
                                                 </Thumb.Template>
                                             </Thumb>
@@ -216,8 +216,8 @@
 
     <!-- Outer Window Shell -->
     <Grid x:Name="Border" Loaded="Border_Loaded" Margin="8">
-        <Border Background="#F9FAFB"
-                BorderBrush="#DCE2F7"
+        <Border Background="{DynamicResource BrushShellBg}"
+                BorderBrush="{DynamicResource BrushBorderVariant}"
                 BorderThickness="1"
                 CornerRadius="10"
                 SnapsToDevicePixels="True">
@@ -232,7 +232,7 @@
                 </Grid.ColumnDefinitions>
 
                 <!-- ==================== SIDEBAR ==================== -->
-                <Border Grid.Column="0" Background="#F9F9FF" BorderBrush="#C7C4D7" BorderThickness="0,0,1,0">
+                <Border Grid.Column="0" Background="{DynamicResource BrushSurface}" BorderBrush="{DynamicResource BrushBorderOutline}" BorderThickness="0,0,1,0">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
@@ -243,17 +243,17 @@
                         <!-- Branding -->
                         <StackPanel Grid.Row="0" Margin="16,24,16,32">
                             <TextBlock Text="MRI" FontFamily="Inter, Segoe UI" FontWeight="Bold"
-                                       FontSize="32" Foreground="#4648D4" LineHeight="40"/>
+                                       FontSize="32" Foreground="{DynamicResource BrushAccent}" LineHeight="40"/>
                             <TextBlock Text="Instance Manager" FontFamily="Inter, Segoe UI"
-                                       FontSize="14" Foreground="#464554" Margin="0,2,0,0"/>
+                                       FontSize="14" Foreground="{DynamicResource BrushTextSecondary}" Margin="0,2,0,0"/>
                         </StackPanel>
 
                         <!-- Navigation -->
                         <StackPanel Grid.Row="1" Margin="8,0,8,0">
                             <Button x:Name="InstancesTabBtn" Content="Active Sessions"
                                     Style="{StaticResource SidebarNavItemStyle}"
-                                    Background="#D2E1F7" Foreground="#556477"
-                                    BorderBrush="#4648D4" BorderThickness="4,0,0,0"
+                                    Background="{DynamicResource BrushNavActiveBg}" Foreground="{DynamicResource BrushNavActiveText}"
+                                    BorderBrush="{DynamicResource BrushAccent}" BorderThickness="4,0,0,0"
                                     Margin="0,0,0,8"
                                     Click="InstancesTabBtn_Click"/>
                             <Button x:Name="InstructionsTabBtn" Content="Setup Guide"
@@ -278,7 +278,7 @@
                     </Grid.RowDefinitions>
 
                     <!-- Top Bar: Window Controls -->
-                    <Border Grid.Row="0" Background="#F9FAFB" BorderBrush="#DCE2F7" BorderThickness="0,0,0,1">
+                    <Border Grid.Row="0" Background="{DynamicResource BrushShellBg}" BorderBrush="{DynamicResource BrushBorderVariant}" BorderThickness="0,0,0,1">
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,0">
                             <Button x:Name="Minimise" Style="{StaticResource WindowControlButtonStyle}" Margin="0,0,4,0" Click="Minimise_Click">
                                 <Path Data="M4,7.5 L12,7.5" Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"
@@ -312,9 +312,9 @@
 
                                 <StackPanel Grid.Column="0" VerticalAlignment="Center">
                                     <TextBlock Text="Active Sessions" FontFamily="Inter, Segoe UI" FontWeight="Bold"
-                                               FontSize="32" Foreground="#141B2B" LineHeight="40"/>
+                                               FontSize="32" Foreground="{DynamicResource BrushTextPrimary}" LineHeight="40"/>
                                     <Label x:Name="ActiveSessionsHeader" Content="0 Roblox instances currently running"
-                                           Foreground="#464554" FontFamily="Inter, Segoe UI"
+                                           Foreground="{DynamicResource BrushTextSecondary}" FontFamily="Inter, Segoe UI"
                                            FontSize="16" Padding="0" Margin="0,2,0,0"
                                            VerticalContentAlignment="Center"/>
                                 </StackPanel>
@@ -327,23 +327,23 @@
                             </Grid>
 
                             <!-- Empty State: Stepper Intro -->
-                            <Border x:Name="EmptyStateGrid" Grid.Row="1" Background="#FFFFFF"
-                                    BorderBrush="#F1F5F9" BorderThickness="1" CornerRadius="16"
+                            <Border x:Name="EmptyStateGrid" Grid.Row="1" Background="{DynamicResource BrushCard}"
+                                    BorderBrush="{DynamicResource BrushCardBorder}" BorderThickness="1" CornerRadius="16"
                                     Padding="28,24,28,24" Visibility="Visible">
                                 <StackPanel MaxWidth="560" HorizontalAlignment="Center" VerticalAlignment="Center">
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,6">
-                                        <Border Width="36" Height="36" CornerRadius="18" Background="#E1E0FF" Margin="0,0,10,0">
-                                            <Path Data="M7,12.5 L10.5,16 L17,8.5" Stroke="#4648D4" StrokeThickness="2.2"
+                                        <Border Width="36" Height="36" CornerRadius="18" Background="{DynamicResource BrushPrimaryContainerBg}" Margin="0,0,10,0">
+                                            <Path Data="M7,12.5 L10.5,16 L17,8.5" Stroke="{DynamicResource BrushAccent}" StrokeThickness="2.2"
                                                   StrokeStartLineCap="Round" StrokeEndLineCap="Round"
                                                   Width="14" Height="14" Stretch="Uniform"
                                                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                         </Border>
                                         <TextBlock Text="Ready for Multiple Roblox Accounts" FontFamily="Inter, Segoe UI"
-                                                   FontWeight="SemiBold" FontSize="18" Foreground="#141B2B" VerticalAlignment="Center"/>
+                                                   FontWeight="SemiBold" FontSize="18" Foreground="{DynamicResource BrushTextPrimary}" VerticalAlignment="Center"/>
                                     </StackPanel>
 
                                     <TextBlock Text="Singleton mutex lock active. Launch game clients freely — sessions register automatically."
-                                               Foreground="#464554" FontFamily="Inter, Segoe UI" FontSize="14"
+                                               Foreground="{DynamicResource BrushTextSecondary}" FontFamily="Inter, Segoe UI" FontSize="14"
                                                TextAlignment="Center" TextWrapping="Wrap" Margin="0,0,0,20"/>
 
                                     <!-- 3 Step Cards -->
@@ -354,27 +354,27 @@
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
 
-                                        <Border Grid.Column="0" Background="#F9F9FF" BorderBrush="#E9EDFF" BorderThickness="1" CornerRadius="12" Padding="14" Margin="0,0,6,0">
+                                        <Border Grid.Column="0" Background="{DynamicResource BrushSurface}" BorderBrush="{DynamicResource BrushPillBg}" BorderThickness="1" CornerRadius="12" Padding="14" Margin="0,0,6,0">
                                             <StackPanel>
-                                                <TextBlock Text="1" FontFamily="Inter, Segoe UI" FontWeight="Bold" FontSize="13" Foreground="#4648D4" Margin="0,0,0,3"/>
-                                                <TextBlock Text="Launch Account 1" FontFamily="Inter, Segoe UI" FontWeight="SemiBold" FontSize="13" Foreground="#141B2B" Margin="0,0,0,3"/>
-                                                <TextBlock Text="Open main browser and join any experience." FontFamily="Inter, Segoe UI" FontSize="12" Foreground="#767586" TextWrapping="Wrap"/>
+                                                <TextBlock Text="1" FontFamily="Inter, Segoe UI" FontWeight="Bold" FontSize="13" Foreground="{DynamicResource BrushAccent}" Margin="0,0,0,3"/>
+                                                <TextBlock Text="Launch Account 1" FontFamily="Inter, Segoe UI" FontWeight="SemiBold" FontSize="13" Foreground="{DynamicResource BrushTextPrimary}" Margin="0,0,0,3"/>
+                                                <TextBlock Text="Open main browser and join any experience." FontFamily="Inter, Segoe UI" FontSize="12" Foreground="{DynamicResource BrushTextMuted}" TextWrapping="Wrap"/>
                                             </StackPanel>
                                         </Border>
 
-                                        <Border Grid.Column="1" Background="#F9F9FF" BorderBrush="#E9EDFF" BorderThickness="1" CornerRadius="12" Padding="14" Margin="3,0,3,0">
+                                        <Border Grid.Column="1" Background="{DynamicResource BrushSurface}" BorderBrush="{DynamicResource BrushPillBg}" BorderThickness="1" CornerRadius="12" Padding="14" Margin="3,0,3,0">
                                             <StackPanel>
-                                                <TextBlock Text="2" FontFamily="Inter, Segoe UI" FontWeight="Bold" FontSize="13" Foreground="#4648D4" Margin="0,0,0,3"/>
-                                                <TextBlock Text="Launch Account 2" FontFamily="Inter, Segoe UI" FontWeight="SemiBold" FontSize="13" Foreground="#141B2B" Margin="0,0,0,3"/>
-                                                <TextBlock Text="Use Incognito or a 2nd browser profile." FontFamily="Inter, Segoe UI" FontSize="12" Foreground="#767586" TextWrapping="Wrap"/>
+                                                <TextBlock Text="2" FontFamily="Inter, Segoe UI" FontWeight="Bold" FontSize="13" Foreground="{DynamicResource BrushAccent}" Margin="0,0,0,3"/>
+                                                <TextBlock Text="Launch Account 2" FontFamily="Inter, Segoe UI" FontWeight="SemiBold" FontSize="13" Foreground="{DynamicResource BrushTextPrimary}" Margin="0,0,0,3"/>
+                                                <TextBlock Text="Use Incognito or a 2nd browser profile." FontFamily="Inter, Segoe UI" FontSize="12" Foreground="{DynamicResource BrushTextMuted}" TextWrapping="Wrap"/>
                                             </StackPanel>
                                         </Border>
 
-                                        <Border Grid.Column="2" Background="#F9F9FF" BorderBrush="#E9EDFF" BorderThickness="1" CornerRadius="12" Padding="14" Margin="6,0,0,0">
+                                        <Border Grid.Column="2" Background="{DynamicResource BrushSurface}" BorderBrush="{DynamicResource BrushPillBg}" BorderThickness="1" CornerRadius="12" Padding="14" Margin="6,0,0,0">
                                             <StackPanel>
-                                                <TextBlock Text="3" FontFamily="Inter, Segoe UI" FontWeight="Bold" FontSize="13" Foreground="#4648D4" Margin="0,0,0,3"/>
-                                                <TextBlock Text="Multi-Box Active" FontFamily="Inter, Segoe UI" FontWeight="SemiBold" FontSize="13" Foreground="#141B2B" Margin="0,0,0,3"/>
-                                                <TextBlock Text="All sessions run concurrently here." FontFamily="Inter, Segoe UI" FontSize="12" Foreground="#767586" TextWrapping="Wrap"/>
+                                                <TextBlock Text="3" FontFamily="Inter, Segoe UI" FontWeight="Bold" FontSize="13" Foreground="{DynamicResource BrushAccent}" Margin="0,0,0,3"/>
+                                                <TextBlock Text="Multi-Box Active" FontFamily="Inter, Segoe UI" FontWeight="SemiBold" FontSize="13" Foreground="{DynamicResource BrushTextPrimary}" Margin="0,0,0,3"/>
+                                                <TextBlock Text="All sessions run concurrently here." FontFamily="Inter, Segoe UI" FontSize="12" Foreground="{DynamicResource BrushTextMuted}" TextWrapping="Wrap"/>
                                             </StackPanel>
                                         </Border>
                                     </Grid>
@@ -396,9 +396,9 @@
                                 <!-- Page Header -->
                                 <StackPanel Margin="0,0,0,32">
                                     <TextBlock Text="Setup Guide" FontFamily="Inter, Segoe UI" FontWeight="Bold"
-                                               FontSize="32" Foreground="#141B2B" LineHeight="40"/>
+                                               FontSize="32" Foreground="{DynamicResource BrushTextPrimary}" LineHeight="40"/>
                                     <TextBlock Text="Follow these steps in order. Multiple Roblox Instances must be open before Roblox launches."
-                                               Foreground="#464554" FontFamily="Inter, Segoe UI" FontSize="16"
+                                               Foreground="{DynamicResource BrushTextSecondary}" FontFamily="Inter, Segoe UI" FontSize="16"
                                                TextWrapping="Wrap" MaxWidth="576" Margin="0,4,0,0"/>
                                 </StackPanel>
 
@@ -410,20 +410,20 @@
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
                                     <StackPanel Grid.Column="0" HorizontalAlignment="Center">
-                                        <Border Width="32" Height="32" CornerRadius="16" Background="#F9F9FF"
-                                                BorderBrush="#C7C4D7" BorderThickness="2">
-                                            <TextBlock Text="1" Foreground="#767586" FontFamily="Inter, Segoe UI" FontSize="12"
+                                        <Border Width="32" Height="32" CornerRadius="16" Background="{DynamicResource BrushSurface}"
+                                                BorderBrush="{DynamicResource BrushBorderOutline}" BorderThickness="2">
+                                            <TextBlock Text="1" Foreground="{DynamicResource BrushTextMuted}" FontFamily="Inter, Segoe UI" FontSize="12"
                                                        FontWeight="Medium" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                         </Border>
-                                        <Border Width="2" Height="40" Background="#DCE2F7" HorizontalAlignment="Center" Margin="0,0,0,0"/>
+                                        <Border Width="2" Height="40" Background="{DynamicResource BrushBorderVariant}" HorizontalAlignment="Center" Margin="0,0,0,0"/>
                                     </StackPanel>
                                     <StackPanel Grid.Column="1" Margin="12,4,0,32">
                                         <TextBlock Text="Close All Roblox Instances" FontFamily="Inter, Segoe UI" FontWeight="SemiBold"
-                                                   FontSize="18" Foreground="#141B2B"/>
+                                                   FontSize="18" Foreground="{DynamicResource BrushTextPrimary}"/>
                                         <TextBlock Text="Close every running Roblox instance first."
-                                                   Foreground="#464554" FontFamily="Inter, Segoe UI" FontSize="14" Margin="0,2,0,0"/>
+                                                   Foreground="{DynamicResource BrushTextSecondary}" FontFamily="Inter, Segoe UI" FontSize="14" Margin="0,2,0,0"/>
                                         <TextBlock Text="Warning: Roblox may minimise itself to your tray. If so, click Exit on the Roblox tray icon."
-                                                   Foreground="#767586" FontFamily="Inter, Segoe UI" FontSize="13" Margin="0,4,0,0" TextWrapping="Wrap"/>
+                                                   Foreground="{DynamicResource BrushTextMuted}" FontFamily="Inter, Segoe UI" FontSize="13" Margin="0,4,0,0" TextWrapping="Wrap"/>
                                     </StackPanel>
                                 </Grid>
 
@@ -434,29 +434,29 @@
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
                                     <StackPanel Grid.Column="0" HorizontalAlignment="Center">
-                                        <Border Width="32" Height="32" CornerRadius="16" Background="#F9F9FF"
-                                                BorderBrush="#C7C4D7" BorderThickness="2">
-                                            <TextBlock Text="2" Foreground="#767586" FontFamily="Inter, Segoe UI" FontSize="12"
+                                        <Border Width="32" Height="32" CornerRadius="16" Background="{DynamicResource BrushSurface}"
+                                                BorderBrush="{DynamicResource BrushBorderOutline}" BorderThickness="2">
+                                            <TextBlock Text="2" Foreground="{DynamicResource BrushTextMuted}" FontFamily="Inter, Segoe UI" FontSize="12"
                                                        FontWeight="Medium" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                         </Border>
-                                        <Border Width="2" Height="40" Background="#DCE2F7" HorizontalAlignment="Center"/>
+                                        <Border Width="2" Height="40" Background="{DynamicResource BrushBorderVariant}" HorizontalAlignment="Center"/>
                                     </StackPanel>
-                                    <Border Grid.Column="1" Margin="12,0,0,32" Background="#FFFFFF" BorderBrush="#DCE2F7"
+                                    <Border Grid.Column="1" Margin="12,0,0,32" Background="{DynamicResource BrushCard}" BorderBrush="{DynamicResource BrushBorderVariant}"
                                             BorderThickness="1" CornerRadius="12">
                                         <Grid>
-                                            <Border Width="4" HorizontalAlignment="Left" Background="#4648D4" CornerRadius="12,0,0,12"/>
+                                            <Border Width="4" HorizontalAlignment="Left" Background="{DynamicResource BrushAccent}" CornerRadius="12,0,0,12"/>
                                             <StackPanel Margin="24,20,24,20">
                                                 <StackPanel Orientation="Horizontal">
                                                     <TextBlock Text="Run Multiple Roblox Instances" FontFamily="Inter, Segoe UI" FontWeight="SemiBold"
-                                                               FontSize="18" Foreground="#4648D4"/>
-                                                    <Border Margin="10,0,0,0" Padding="12,3,12,3" Background="#EDEDFC"
+                                                               FontSize="18" Foreground="{DynamicResource BrushAccent}"/>
+                                                    <Border Margin="10,0,0,0" Padding="12,3,12,3" Background="{DynamicResource BrushPrimaryContainerBg}"
                                                             CornerRadius="9999" VerticalAlignment="Center">
-                                                        <TextBlock Text="IMPORTANT" Foreground="#6063EE" FontFamily="Consolas, Segoe UI"
+                                                        <TextBlock Text="IMPORTANT" Foreground="{DynamicResource BrushPrimaryContainer}" FontFamily="Consolas, Segoe UI"
                                                                    FontSize="11" FontWeight="SemiBold"/>
                                                     </Border>
                                                 </StackPanel>
                                                 <TextBlock Text="Start Multiple Roblox Instances now. It must be open BEFORE you launch Roblox."
-                                                           Foreground="#464554" FontFamily="Inter, Segoe UI" FontSize="14" Margin="0,4,0,0" TextWrapping="Wrap"/>
+                                                           Foreground="{DynamicResource BrushTextSecondary}" FontFamily="Inter, Segoe UI" FontSize="14" Margin="0,4,0,0" TextWrapping="Wrap"/>
                                             </StackPanel>
                                         </Grid>
                                     </Border>
@@ -469,18 +469,18 @@
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
                                     <StackPanel Grid.Column="0" HorizontalAlignment="Center">
-                                        <Border Width="32" Height="32" CornerRadius="16" Background="#F9F9FF"
-                                                BorderBrush="#C7C4D7" BorderThickness="2">
-                                            <TextBlock Text="3" Foreground="#767586" FontFamily="Inter, Segoe UI" FontSize="12"
+                                        <Border Width="32" Height="32" CornerRadius="16" Background="{DynamicResource BrushSurface}"
+                                                BorderBrush="{DynamicResource BrushBorderOutline}" BorderThickness="2">
+                                            <TextBlock Text="3" Foreground="{DynamicResource BrushTextMuted}" FontFamily="Inter, Segoe UI" FontSize="12"
                                                        FontWeight="Medium" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                         </Border>
-                                        <Border Width="2" Height="40" Background="#DCE2F7" HorizontalAlignment="Center"/>
+                                        <Border Width="2" Height="40" Background="{DynamicResource BrushBorderVariant}" HorizontalAlignment="Center"/>
                                     </StackPanel>
                                     <StackPanel Grid.Column="1" Margin="12,4,0,32">
                                         <TextBlock Text="Launch Account X (Main)" FontFamily="Inter, Segoe UI" FontWeight="SemiBold"
-                                                   FontSize="18" Foreground="#141B2B"/>
+                                                   FontSize="18" Foreground="{DynamicResource BrushTextPrimary}"/>
                                         <TextBlock Text="Open https://www.roblox.com/home in your web browser and launch Roblox from your main account. Wait for Roblox to launch."
-                                                   Foreground="#464554" FontFamily="Inter, Segoe UI" FontSize="14" Margin="0,2,0,0" TextWrapping="Wrap"/>
+                                                   Foreground="{DynamicResource BrushTextSecondary}" FontFamily="Inter, Segoe UI" FontSize="14" Margin="0,2,0,0" TextWrapping="Wrap"/>
                                     </StackPanel>
                                 </Grid>
 
@@ -491,50 +491,50 @@
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
                                     <StackPanel Grid.Column="0" HorizontalAlignment="Center">
-                                        <Border Width="32" Height="32" CornerRadius="16" Background="#F9F9FF"
-                                                BorderBrush="#C7C4D7" BorderThickness="2">
-                                            <TextBlock Text="4" Foreground="#767586" FontFamily="Inter, Segoe UI" FontSize="12"
+                                        <Border Width="32" Height="32" CornerRadius="16" Background="{DynamicResource BrushSurface}"
+                                                BorderBrush="{DynamicResource BrushBorderOutline}" BorderThickness="2">
+                                            <TextBlock Text="4" Foreground="{DynamicResource BrushTextMuted}" FontFamily="Inter, Segoe UI" FontSize="12"
                                                        FontWeight="Medium" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                         </Border>
                                     </StackPanel>
                                     <StackPanel Grid.Column="1" Margin="12,4,0,0">
                                         <TextBlock Text="Launch Account Y (Alt)" FontFamily="Inter, Segoe UI" FontWeight="SemiBold"
-                                                   FontSize="18" Foreground="#141B2B"/>
+                                                   FontSize="18" Foreground="{DynamicResource BrushTextPrimary}"/>
                                         <TextBlock Text="Launch Roblox from your alt account in the browser. You must use a different Roblox account."
-                                                   Foreground="#464554" FontFamily="Inter, Segoe UI" FontSize="14" Margin="0,2,0,0" TextWrapping="Wrap"/>
-                                        <Border Background="#F9F9FF" BorderBrush="#DCE2F7" BorderThickness="1" CornerRadius="8" Padding="16" Margin="0,12,0,0">
+                                                   Foreground="{DynamicResource BrushTextSecondary}" FontFamily="Inter, Segoe UI" FontSize="14" Margin="0,2,0,0" TextWrapping="Wrap"/>
+                                        <Border Background="{DynamicResource BrushSurface}" BorderBrush="{DynamicResource BrushBorderVariant}" BorderThickness="1" CornerRadius="8" Padding="16" Margin="0,12,0,0">
                                             <StackPanel>
-                                                <TextBlock Text="To switch accounts, you can:" Foreground="#516072" FontFamily="Inter, Segoe UI"
+                                                <TextBlock Text="To switch accounts, you can:" Foreground="{DynamicResource BrushMonoFooter}" FontFamily="Inter, Segoe UI"
                                                            FontSize="14" FontWeight="Medium" Margin="0,0,0,8"/>
                                                 <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
-                                                    <Path Data="M0,0 L1,0 M0.5,-0.5 L0.5,0.5" Stroke="#767586" StrokeThickness="1.5"
+                                                    <Path Data="M0,0 L1,0 M0.5,-0.5 L0.5,0.5" Stroke="{DynamicResource BrushTextMuted}" StrokeThickness="1.5"
                                                           Width="8" Height="8" Stretch="Uniform" Margin="0,0,8,0" VerticalAlignment="Center"/>
                                                     <TextBlock Text="Log out and log into a different account (not recommended)"
-                                                               Foreground="#464554" FontFamily="Inter, Segoe UI" FontSize="13" TextWrapping="Wrap"/>
+                                                               Foreground="{DynamicResource BrushTextSecondary}" FontFamily="Inter, Segoe UI" FontSize="13" TextWrapping="Wrap"/>
                                                 </StackPanel>
                                                 <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
-                                                    <Path Data="M0,0 L1,0 M0.5,-0.5 L0.5,0.5" Stroke="#767586" StrokeThickness="1.5"
+                                                    <Path Data="M0,0 L1,0 M0.5,-0.5 L0.5,0.5" Stroke="{DynamicResource BrushTextMuted}" StrokeThickness="1.5"
                                                           Width="8" Height="8" Stretch="Uniform" Margin="0,0,8,0" VerticalAlignment="Center"/>
                                                     <TextBlock Text="Use Roblox's account switcher"
-                                                               Foreground="#464554" FontFamily="Inter, Segoe UI" FontSize="13" TextWrapping="Wrap"/>
+                                                               Foreground="{DynamicResource BrushTextSecondary}" FontFamily="Inter, Segoe UI" FontSize="13" TextWrapping="Wrap"/>
                                                 </StackPanel>
                                                 <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
-                                                    <Path Data="M0,0 L1,0 M0.5,-0.5 L0.5,0.5" Stroke="#767586" StrokeThickness="1.5"
+                                                    <Path Data="M0,0 L1,0 M0.5,-0.5 L0.5,0.5" Stroke="{DynamicResource BrushTextMuted}" StrokeThickness="1.5"
                                                           Width="8" Height="8" Stretch="Uniform" Margin="0,0,8,0" VerticalAlignment="Center"/>
                                                     <TextBlock Text="Use a different browser profile"
-                                                               Foreground="#464554" FontFamily="Inter, Segoe UI" FontSize="13" TextWrapping="Wrap"/>
+                                                               Foreground="{DynamicResource BrushTextSecondary}" FontFamily="Inter, Segoe UI" FontSize="13" TextWrapping="Wrap"/>
                                                 </StackPanel>
                                                 <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
-                                                    <Path Data="M0,0 L1,0 M0.5,-0.5 L0.5,0.5" Stroke="#767586" StrokeThickness="1.5"
+                                                    <Path Data="M0,0 L1,0 M0.5,-0.5 L0.5,0.5" Stroke="{DynamicResource BrushTextMuted}" StrokeThickness="1.5"
                                                           Width="8" Height="8" Stretch="Uniform" Margin="0,0,8,0" VerticalAlignment="Center"/>
                                                     <TextBlock Text="Use a browser extension to switch accounts"
-                                                               Foreground="#464554" FontFamily="Inter, Segoe UI" FontSize="13" TextWrapping="Wrap"/>
+                                                               Foreground="{DynamicResource BrushTextSecondary}" FontFamily="Inter, Segoe UI" FontSize="13" TextWrapping="Wrap"/>
                                                 </StackPanel>
                                                 <StackPanel Orientation="Horizontal" Margin="0,0,0,0">
-                                                    <Path Data="M0,0 L1,0 M0.5,-0.5 L0.5,0.5" Stroke="#767586" StrokeThickness="1.5"
+                                                    <Path Data="M0,0 L1,0 M0.5,-0.5 L0.5,0.5" Stroke="{DynamicResource BrushTextMuted}" StrokeThickness="1.5"
                                                           Width="8" Height="8" Stretch="Uniform" Margin="0,0,8,0" VerticalAlignment="Center"/>
                                                     <TextBlock Text="Anything else that allows you to launch from a different Roblox account"
-                                                               Foreground="#464554" FontFamily="Inter, Segoe UI" FontSize="13" TextWrapping="Wrap"/>
+                                                               Foreground="{DynamicResource BrushTextSecondary}" FontFamily="Inter, Segoe UI" FontSize="13" TextWrapping="Wrap"/>
                                                 </StackPanel>
                                             </StackPanel>
                                         </Border>
@@ -546,20 +546,40 @@
                     </Grid>
 
                     <!-- Footer Status Bar -->
-                    <Border Grid.Row="2" Background="#FFFFFF" BorderBrush="#F1F5F9" BorderThickness="0,1,0,0">
+                    <Border Grid.Row="2" Background="{DynamicResource BrushCard}" BorderBrush="{DynamicResource BrushCardBorder}" BorderThickness="0,1,0,0">
                         <Grid Margin="24,0,24,0">
-                            <TextBlock Text="v2.2.0" Foreground="#516072" FontFamily="Consolas, Segoe UI"
+                            <TextBlock Text="v2.2.0" Foreground="{DynamicResource BrushMonoFooter}" FontFamily="Consolas, Segoe UI"
                                        FontSize="11" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-                            <TextBlock x:Name="UpdateAvailable" Text="Update Available" Foreground="#4648D4"
+                            <TextBlock x:Name="UpdateAvailable" Text="Update Available" Foreground="{DynamicResource BrushAccent}"
                                        FontFamily="Inter, Segoe UI" FontSize="11" FontWeight="SemiBold"
                                        VerticalAlignment="Center" HorizontalAlignment="Left" Margin="52,0,0,0"
                                        Visibility="Collapsed"/>
 
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
-                                <TextBlock x:Name="MutexStatusText" Text="MUTEX: LOCKED" Foreground="#43474B"
+                                <TextBlock x:Name="MutexStatusText" Text="MUTEX: LOCKED" Foreground="{DynamicResource BrushMonoStatus}"
                                            FontFamily="Consolas, Segoe UI" FontSize="11" FontWeight="SemiBold" Margin="0,0,16,0"/>
-                                <TextBlock x:Name="CookieLockStatusText" Text="COOKIE ISOLATION: ACTIVE" Foreground="#43474B"
+                                <TextBlock x:Name="CookieLockStatusText" Text="COOKIE ISOLATION: ACTIVE" Foreground="{DynamicResource BrushMonoStatus}"
                                            FontFamily="Consolas, Segoe UI" FontSize="11" FontWeight="SemiBold"/>
+                                <Button x:Name="ThemeToggleBtn" Click="ThemeToggleBtn_Click" ToolTip="Toggle Dark Mode"
+                                        Width="26" Height="26" Margin="16,0,0,0" Background="Transparent" BorderThickness="0"
+                                        Cursor="Hand" VerticalAlignment="Center" Foreground="{DynamicResource BrushTextMuted}">
+                                    <Button.Template>
+                                        <ControlTemplate TargetType="{x:Type Button}">
+                                            <Border x:Name="tb" Background="{TemplateBinding Background}" CornerRadius="13">
+                                                <Path Data="M 12 2 A 10 10 0 1 0 22 12 A 7 7 0 1 1 12 2 Z"
+                                                      Stroke="{TemplateBinding Foreground}" StrokeThickness="1.5"
+                                                      Width="14" Height="14" Stretch="Uniform"
+                                                      HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter TargetName="tb" Property="Background" Value="{DynamicResource BrushNavHover}"/>
+                                                    <Setter Property="Foreground" Value="{DynamicResource BrushAccent}"/>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
                             </StackPanel>
                         </Grid>
                     </Border>
