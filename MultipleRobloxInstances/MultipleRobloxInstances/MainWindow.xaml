@@ -5,230 +5,566 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MultipleRobloxInstances"
         mc:Ignorable="d"
-        Title="MainWindow" Height="322" Width="524" WindowStyle="None" Background="{x:Null}" ResizeMode="NoResize" MouseDown="Window_MouseDown" Foreground="{x:Null}">
-
-    <!-- Resources copied from MainDab -->
-
-
+        Title="MRI Pro Instance Manager" 
+        Height="640" Width="960" 
+        WindowStyle="None" 
+        Background="{x:Null}" 
+        AllowsTransparency="True"
+        ResizeMode="NoResize" 
+        WindowStartupLocation="CenterScreen"
+        MouseDown="Window_MouseDown" 
+        Foreground="{x:Null}">
 
     <Window.Resources>
-
-
-        <SolidColorBrush x:Key="GlyphBrush" Color="#444" />
-        <SolidColorBrush x:Key="NormalBrush" Color="#888" />
-        <SolidColorBrush x:Key="NormalBorderBrush" Color="#888" />
-        <SolidColorBrush x:Key="HorizontalNormalBrush" Color="#FF686868" />
-        <SolidColorBrush x:Key="HorizontalNormalBorderBrush" Color="#888" />
-        <SolidColorBrush x:Key="DisabledForegroundBrush" Color="#888" />
-
-        <ControlTemplate x:Key="NoHighlightBut" TargetType="{x:Type ButtonBase}">
-            <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
-                <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-            </Border>
-            <ControlTemplate.Triggers>
-                <Trigger Property="Button.IsDefaulted" Value="True">
-                    <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
-                </Trigger>
-
-
-                <Trigger Property="ToggleButton.IsChecked" Value="True">
-                    <Setter Property="Background" TargetName="border" Value="#4C464646"/>
-                    <Setter Property="BorderBrush" TargetName="border" Value="#4C464646"/>
-                </Trigger>
-                <Trigger Property="IsEnabled" Value="False">
-                    <Setter Property="Background" TargetName="border" Value="#4C464646"/>
-                    <Setter Property="BorderBrush" TargetName="border" Value="#4C464646"/>
-                    <Setter Property="Foreground" Value="#4C464646"/>
-                </Trigger>
-            </ControlTemplate.Triggers>
-        </ControlTemplate>
-        <LinearGradientBrush x:Key="PressedBrush" StartPoint="0,0" EndPoint="0,1">
-            <LinearGradientBrush.GradientStops>
-                <GradientStopCollection>
-                    <GradientStop Color="#BBB" Offset="0.0"/>
-                    <GradientStop Color="#EEE" Offset="0.1"/>
-                    <GradientStop Color="#EEE" Offset="0.9"/>
-                    <GradientStop Color="#FFF" Offset="1.0"/>
-                </GradientStopCollection>
-            </LinearGradientBrush.GradientStops>
-        </LinearGradientBrush>
-        <Style x:Key="ScrollBarLineButton" TargetType="{x:Type RepeatButton}">
-            <Setter Property="Visibility" Value="Hidden"/>
-            <Setter Property="SnapsToDevicePixels" Value="True"/>
-            <Setter Property="OverridesDefaultStyle" Value="true"/>
-            <Setter Property="Focusable" Value="false"/>
+        <!-- Sidebar Nav Item Style -->
+        <Style x:Key="SidebarNavItemStyle" TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#464554"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="4,0,0,0"/>
+            <Setter Property="FontFamily" Value="Inter, Segoe UI"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="Medium"/>
+            <Setter Property="Padding" Value="16,9,16,9"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Template">
                 <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type RepeatButton}">
-                        <Border x:Name="Border" Margin="0" Background="{StaticResource NormalBrush}" BorderBrush="{StaticResource NormalBorderBrush}" BorderThickness="0">
-                            <Path HorizontalAlignment="Center" VerticalAlignment="Center" Fill="{StaticResource GlyphBrush}" Data="{Binding Content, RelativeSource={RelativeSource TemplatedParent}}" />
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="navBorder"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="12"
+                                Padding="{TemplateBinding Padding}"
+                                SnapsToDevicePixels="True">
+                            <ContentPresenter HorizontalAlignment="Left" VerticalAlignment="Center"/>
                         </Border>
                         <ControlTemplate.Triggers>
-                            <Trigger Property="IsPressed" Value="true">
-                                <Setter TargetName="Border" Property="Background" Value="{StaticResource PressedBrush}" />
-                            </Trigger>
-                            <Trigger Property="IsEnabled" Value="false">
-                                <Setter Property="Foreground" Value="{StaticResource DisabledForegroundBrush}"/>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="navBorder" Property="Background" Value="#E1E8FD"/>
+                                <Setter Property="Foreground" Value="#141B2B"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
-        <Style x:Key="ScrollBarPageButton" TargetType="{x:Type RepeatButton}">
-            <Setter Property="Visibility" Value="Hidden"/>
-            <Setter Property="SnapsToDevicePixels" Value="True"/>
-            <Setter Property="OverridesDefaultStyle" Value="true"/>
-            <Setter Property="IsTabStop" Value="false"/>
-            <Setter Property="Focusable" Value="false"/>
+
+        <!-- Sidebar Terminate All Button Style -->
+        <Style x:Key="SidebarTerminateAllStyle" TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#141B2B"/>
+            <Setter Property="BorderBrush" Value="#C7C4D7"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FontFamily" Value="Inter, Segoe UI"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="Medium"/>
+            <Setter Property="Padding" Value="12,8,12,8"/>
+            <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Template">
                 <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type RepeatButton}">
-                        <Border Background="Black" />
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="btnBorder"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="8"
+                                Padding="{TemplateBinding Padding}"
+                                SnapsToDevicePixels="True">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <Path Data="M3,3 L9,9 M9,3 L3,9"
+                                      Stroke="{TemplateBinding Foreground}"
+                                      StrokeThickness="1.5"
+                                      Width="10" Height="10" Margin="0,0,6,0"
+                                      VerticalAlignment="Center" Stretch="Uniform"/>
+                                <ContentPresenter VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="btnBorder" Property="Background" Value="#F1F3FF"/>
+                                <Setter Property="Foreground" Value="#4648D4"/>
+                                <Setter TargetName="btnBorder" Property="BorderBrush" Value="#4648D4"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
 
-        <Style x:Key="ScrollBarThumb" TargetType="{x:Type Thumb}">
-            <Setter Property="SnapsToDevicePixels" Value="True"/>
-            <Setter Property="OverridesDefaultStyle" Value="true"/>
-            <Setter Property="IsTabStop" Value="false"/>
-            <Setter Property="Focusable" Value="false"/>
+        <!-- Refresh Button Style -->
+        <Style x:Key="RefreshButtonStyle" TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="#FFFFFF"/>
+            <Setter Property="Foreground" Value="#516072"/>
+            <Setter Property="BorderBrush" Value="#C7C4D7"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FontFamily" Value="Inter, Segoe UI"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="Medium"/>
+            <Setter Property="Padding" Value="14,7,14,7"/>
+            <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Template">
                 <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Thumb}">
-                        <Border CornerRadius="3" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="0"  Width="8" Margin="8,0,-2,0"/>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="btnBorder"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="8"
+                                Padding="{TemplateBinding Padding}"
+                                SnapsToDevicePixels="True">
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                <Path Data="M10,2 C5.6,2 2,5.6 2,10 C2,14.4 5.6,18 10,18 C13.7,18 16.8,15.4 17.6,12 L15.4,12 C14.7,14.4 12.5,16 10,16 C6.7,16 4,13.3 4,10 C4,6.7 6.7,4 10,4 C11.9,4 13.6,4.9 14.7,6.3 L11.5,9.5 L18,9.5 L18,3 Z"
+                                      Fill="{TemplateBinding Foreground}"
+                                      Width="13" Height="13" Margin="0,0,7,0"
+                                      VerticalAlignment="Center" Stretch="Uniform"/>
+                                <ContentPresenter VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="btnBorder" Property="Background" Value="#F1F3FF"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
 
-        <ControlTemplate x:Key="VerticalScrollBar" TargetType="{x:Type ScrollBar}">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition MaxHeight="0"/>
-                    <RowDefinition Height="0.00001*"/>
-                    <RowDefinition MaxHeight="0"/>
-                </Grid.RowDefinitions>
-                <Border Grid.RowSpan="3"  Background="Transparent" />
-                <RepeatButton Grid.Row="0" Style="{StaticResource ScrollBarLineButton}" Height="18" Command="ScrollBar.LineUpCommand" Content="M 0 4 L 8 4 L 4 0 Z" Background="{x:Null}" />
-                <Track x:Name="PART_Track" Grid.Row="1" IsDirectionReversed="true">
-                    <Track.DecreaseRepeatButton>
-                        <RepeatButton Style="{StaticResource ScrollBarPageButton}" Command="ScrollBar.PageUpCommand" />
-                    </Track.DecreaseRepeatButton>
-                    <Track.Thumb>
-                        <Thumb Style="{StaticResource ScrollBarThumb}" Margin="0.5,0,0.5,0" Background="#33525252" BorderBrush="#7F7C7C7C" />
-                    </Track.Thumb>
-                    <Track.IncreaseRepeatButton>
-                        <RepeatButton Style="{StaticResource ScrollBarPageButton}" Command="ScrollBar.PageDownCommand" />
-                    </Track.IncreaseRepeatButton>
-                </Track>
-                <RepeatButton Grid.Row="3" Style="{StaticResource ScrollBarLineButton}" Height="18" Command="ScrollBar.LineDownCommand" Content="M 0 0 L 4 4 L 8 0 Z"/>
-            </Grid>
-        </ControlTemplate>
-        <ControlTemplate x:Key="HorizontalScrollBar" TargetType="{x:Type ScrollBar}">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition MaxWidth="18"/>
-                    <ColumnDefinition Width="0.00001*"/>
-                    <ColumnDefinition MaxWidth="18"/>
-                </Grid.ColumnDefinitions>
-                <Border Grid.ColumnSpan="3" Background="Transparent"/>
-                <RepeatButton Grid.Column="0"  Style="{StaticResource ScrollBarLineButton}" Width="18" Command="ScrollBar.LineLeftCommand" Content="M 4 0 L 4 8 L 0 4 Z" />
-                <Track x:Name="PART_Track" Grid.Column="1" IsDirectionReversed="False">
-                    <Track.DecreaseRepeatButton>
-                        <RepeatButton Style="{StaticResource ScrollBarPageButton}" Command="ScrollBar.PageLeftCommand" />
-                    </Track.DecreaseRepeatButton>
-                    <Track.Thumb>
-                        <Thumb Style="{StaticResource ScrollBarThumb}" Margin="0,1,0,1" Background="{StaticResource NormalBrush}" BorderBrush="{StaticResource NormalBorderBrush}" />
-                    </Track.Thumb>
-                    <Track.IncreaseRepeatButton>
-                        <RepeatButton Style="{StaticResource ScrollBarPageButton}" Command="ScrollBar.PageRightCommand" />
-                    </Track.IncreaseRepeatButton>
-                </Track>
-                <RepeatButton Grid.Column="3" Style="{StaticResource ScrollBarLineButton}" Width="18" Command="ScrollBar.LineRightCommand" Content="M 0 0 L 4 4 L 0 8 Z"/>
-            </Grid>
-        </ControlTemplate>
-        <Style x:Key="{x:Type ScrollBar}" TargetType="{x:Type ScrollBar}">
+        <!-- Window Control Button Styles -->
+        <Style x:Key="WindowControlButtonStyle" TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#767586"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Width" Value="34"/>
+            <Setter Property="Height" Value="28"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="wndBorder"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="6"
+                                SnapsToDevicePixels="True">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="wndBorder" Property="Background" Value="#E1E8FD"/>
+                                <Setter Property="Foreground" Value="#141B2B"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="CloseWindowControlButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource WindowControlButtonStyle}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="wndBorder"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="6"
+                                SnapsToDevicePixels="True">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="wndBorder" Property="Background" Value="#FFDAD6"/>
+                                <Setter Property="Foreground" Value="#BA1A1A"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Light Scrollbar Style -->
+        <Style TargetType="{x:Type ScrollBar}">
             <Setter Property="SnapsToDevicePixels" Value="True"/>
-            <Setter Property="OverridesDefaultStyle" Value="true"/>
+            <Setter Property="OverridesDefaultStyle" Value="True"/>
             <Style.Triggers>
-                <Trigger Property="Orientation" Value="Horizontal">
-                    <Setter Property="Width" Value="Auto"/>
-                    <Setter Property="Height" Value="18" />
-                    <Setter Property="Template" Value="{StaticResource HorizontalScrollBar}" />
-                </Trigger>
                 <Trigger Property="Orientation" Value="Vertical">
-                    <Setter Property="Width" Value="18"/>
-                    <Setter Property="Height" Value="Auto" />
-                    <Setter Property="Template" Value="{StaticResource VerticalScrollBar}" />
+                    <Setter Property="Width" Value="8"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type ScrollBar}">
+                                <Grid Background="Transparent">
+                                    <Track x:Name="PART_Track" IsDirectionReversed="True">
+                                        <Track.Thumb>
+                                            <Thumb>
+                                                <Thumb.Template>
+                                                    <ControlTemplate TargetType="{x:Type Thumb}">
+                                                        <Border Background="#DCE2F7" CornerRadius="4"/>
+                                                    </ControlTemplate>
+                                                </Thumb.Template>
+                                            </Thumb>
+                                        </Track.Thumb>
+                                    </Track>
+                                </Grid>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
                 </Trigger>
             </Style.Triggers>
         </Style>
-
-        <Style x:Key="FavsScrollViewer" TargetType="{x:Type ScrollViewer}">
-            <Setter Property="OverridesDefaultStyle" Value="True"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type ScrollViewer}">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-                            <ScrollContentPresenter Grid.Column="1"/>
-                            <ScrollBar x:Name="PART_VerticalScrollBar" Value="{TemplateBinding VerticalOffset}" Maximum="{TemplateBinding ScrollableHeight}" ViewportSize="{TemplateBinding ViewportHeight}" Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"/>
-                            <ScrollBar x:Name="PART_HorizontalScrollBar" Orientation="Horizontal" Grid.Row="1" Grid.Column="1" Value="{TemplateBinding HorizontalOffset}" Maximum="{TemplateBinding ScrollableWidth}" ViewportSize="{TemplateBinding ViewportWidth}" Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}"/>
-                        </Grid>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
     </Window.Resources>
 
-    <Grid x:Name="Border" Loaded="Border_Loaded" Background="White">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="446*"/>
-            <ColumnDefinition Width="79*"/>
-        </Grid.ColumnDefinitions>
-        <Grid x:Name="MainWin" Margin="0.5,0.5,0.5,0.5" Width="522" Height="321" Grid.ColumnSpan="2" Background="#FF0C0C0C">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="177*"/>
-                <ColumnDefinition Width="23*"/>
-            </Grid.ColumnDefinitions>
-            <Grid x:Name="TopBar" Margin="0,0,-2,279" Grid.ColumnSpan="2">
-                <Label x:Name="WindowTitle" Content="Multiple Roblox Instances" HorizontalAlignment="Left" VerticalAlignment="Center" Height="40" RenderTransformOrigin="0.5,0.5" Width="237" FontFamily="Calibri Light" Foreground="White" Margin="4,0,0,0" FontSize="22">
-                    <Label.RenderTransform>
-                        <TransformGroup>
-                            <ScaleTransform ScaleY="1"/>
-                            <SkewTransform/>
-                            <RotateTransform/>
-                            <TranslateTransform/>
-                        </TransformGroup>
-                    </Label.RenderTransform>
-                </Label>
-                <Button x:Name="CloseWindow" Content="X" HorizontalAlignment="Left" Margin="489,0,0,0" VerticalAlignment="Center"  Template ="{DynamicResource NoHighlightBut}" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" FontFamily="Calibri Light" Height="30" Width="21" FontSize="20" Click="Close_Click"/>
-                <Button x:Name="Minimise" Content="—" HorizontalAlignment="Left" Margin="454,0,0,0" VerticalAlignment="Center"  Template ="{DynamicResource NoHighlightBut}" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" FontFamily="Calibri Light" Height="30" Width="21" FontSize="20" Click="Minimise_Click"/>
-                <Border x:Name="VersionBorder" BorderThickness="1" HorizontalAlignment="Left" Height="16" CornerRadius="5 5 5 5" VerticalAlignment="Center" Width="28" BorderBrush="#FF9B62F9" Margin="244,0,0,0"/>
-                <TextBlock x:Name="VersionText" HorizontalAlignment="Left" Height="14" TextWrapping="Wrap" VerticalAlignment="Center" Width="28" Foreground="#FF9A9898" FontFamily="Calibri Light" FontSize="10" TextAlignment="Center" Margin="244,0,0,-1.5"><Run Text="2."/><Run Language="en-gb" Text="2"/></TextBlock>
-                <TextBlock x:Name="UpdateAvailable" HorizontalAlignment="Left" Height="14" TextWrapping="Wrap" VerticalAlignment="Center" Width="149.7" Foreground="#FF646464" FontFamily="Calibri Light" FontSize="10" TextAlignment="Left" Margin="280,0,0,-1.5" MouseDown="UpdateAvailable_MouseDown" Visibility="Hidden"><Run Language="en-hk" Text="Update available"/></TextBlock>
-            </Grid>
-            <ScrollViewer x:Name="InstancesScrollView" HorizontalAlignment="Left" Height="261" VerticalAlignment="Top" Width="522" Grid.IsSharedSizeScope="True" Grid.ColumnSpan="2" Margin="0,35,0,0">
-                <WrapPanel x:Name="WP1" HorizontalAlignment="Left" Height="Auto" VerticalAlignment="Top" Width="522" Grid.IsSharedSizeScope="True"/>
-            </ScrollViewer>
-            <Grid x:Name="StatusBar" Grid.ColumnSpan="2" Margin="0,296,0,0">
-                <Label x:Name="StatusText" HorizontalContentAlignment="Left" Content="Multiple Roblox Instances is currently running." HorizontalAlignment="Left" Margin="3,-2,0,0" VerticalAlignment="Top" Height="25" Width="364" Foreground="#FF737373" FontFamily="Calibri"/>
-                <Image x:Name="GitHubIcon"  RenderOptions.BitmapScalingMode="HighQuality" RenderOptions.EdgeMode="Aliased" HorizontalAlignment="Left" Height="14" Margin="499,4,0,0" VerticalAlignment="Top" Width="13" Source="/Resources/GitHubIcon.png" Opacity="0.5" MouseDown="GitHubIcon_MouseDown"/>
-                <Image x:Name="DiscordIcon"  RenderOptions.BitmapScalingMode="HighQuality" RenderOptions.EdgeMode="Aliased" HorizontalAlignment="Left" Height="18" Margin="476,0,0,3" VerticalAlignment="Center" Width="14" Source="/Resources/DiscordIcon.png" Opacity="0.5" MouseDown="DiscordIcon_MouseDown"/>
-                <Image x:Name="TelegramIcon"  RenderOptions.BitmapScalingMode="HighQuality" RenderOptions.EdgeMode="Aliased" HorizontalAlignment="Left" Height="14" Margin="454,4,0,0" VerticalAlignment="Top" Width="13" Source="/Resources/TelegramIcon.png" Opacity="0.5" MouseDown="TelegramIcon_MouseDown"/>
-                <Image x:Name="WebsiteIcon"  RenderOptions.BitmapScalingMode="HighQuality" RenderOptions.EdgeMode="Aliased" HorizontalAlignment="Left" Height="16" Margin="432,3,0,0" VerticalAlignment="Top" Width="15" Source="/Resources/QuestionIcon.png" Opacity="0.5" MouseDown="WebsiteIcon_MouseDown"/>
-            </Grid>
+    <!-- Outer Window Shell -->
+    <Grid x:Name="Border" Loaded="Border_Loaded" Margin="8">
+        <Border Background="#F9FAFB"
+                BorderBrush="#DCE2F7"
+                BorderThickness="1"
+                CornerRadius="10"
+                SnapsToDevicePixels="True">
+            <Border.Effect>
+                <DropShadowEffect Color="#000000" BlurRadius="24" ShadowDepth="4" Opacity="0.25"/>
+            </Border.Effect>
 
-        </Grid>
+            <Grid x:Name="MainWin">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="280"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- ==================== SIDEBAR ==================== -->
+                <Border Grid.Column="0" Background="#F9F9FF" BorderBrush="#C7C4D7" BorderThickness="0,0,1,0">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- Branding -->
+                        <StackPanel Grid.Row="0" Margin="16,24,16,32">
+                            <TextBlock Text="MRI" FontFamily="Inter, Segoe UI" FontWeight="Bold"
+                                       FontSize="32" Foreground="#4648D4" LineHeight="40"/>
+                            <TextBlock Text="Instance Manager" FontFamily="Inter, Segoe UI"
+                                       FontSize="14" Foreground="#464554" Margin="0,2,0,0"/>
+                        </StackPanel>
+
+                        <!-- Navigation -->
+                        <StackPanel Grid.Row="1" Margin="8,0,8,0">
+                            <Button x:Name="InstancesTabBtn" Content="Active Sessions"
+                                    Style="{StaticResource SidebarNavItemStyle}"
+                                    Background="#D2E1F7" Foreground="#556477"
+                                    BorderBrush="#4648D4" BorderThickness="4,0,0,0"
+                                    Margin="0,0,0,8"
+                                    Click="InstancesTabBtn_Click"/>
+                            <Button x:Name="InstructionsTabBtn" Content="Setup Guide"
+                                    Style="{StaticResource SidebarNavItemStyle}"
+                                    Click="InstructionsTabBtn_Click"/>
+                        </StackPanel>
+
+                        <!-- Bottom Pinned: Terminate All -->
+                        <Button x:Name="TerminateAllBtn" Grid.Row="2" Content="Terminate All"
+                                Style="{StaticResource SidebarTerminateAllStyle}"
+                                Margin="16,0,16,24"
+                                Click="TerminateAllBtn_Click"/>
+                    </Grid>
+                </Border>
+
+                <!-- ==================== CONTENT AREA ==================== -->
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="44"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="40"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Top Bar: Window Controls -->
+                    <Border Grid.Row="0" Background="#F9FAFB" BorderBrush="#DCE2F7" BorderThickness="0,0,0,1">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,0">
+                            <Button x:Name="Minimise" Style="{StaticResource WindowControlButtonStyle}" Margin="0,0,4,0" Click="Minimise_Click">
+                                <Path Data="M4,7.5 L12,7.5" Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"
+                                      StrokeThickness="1.4" StrokeStartLineCap="Round" StrokeEndLineCap="Round"
+                                      Width="12" Height="12" Stretch="Uniform"/>
+                            </Button>
+                            <Button x:Name="CloseWindow" Style="{StaticResource CloseWindowControlButtonStyle}" Click="Close_Click">
+                                <Path Data="M4,4 L12,12 M12,4 L4,12" Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"
+                                      StrokeThickness="1.4" StrokeStartLineCap="Round" StrokeEndLineCap="Round"
+                                      Width="12" Height="12" Stretch="Uniform"/>
+                            </Button>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Main Viewport -->
+                    <Grid Grid.Row="1" Margin="40,32,40,24">
+
+                        <!-- VIEW A: ACTIVE SESSIONS -->
+                        <Grid x:Name="InstancesView" Visibility="Visible">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <!-- Page Header -->
+                            <Grid Grid.Row="0" Margin="0,0,0,20">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                                    <TextBlock Text="Active Sessions" FontFamily="Inter, Segoe UI" FontWeight="Bold"
+                                               FontSize="32" Foreground="#141B2B" LineHeight="40"/>
+                                    <Label x:Name="ActiveSessionsHeader" Content="0 Roblox instances currently running"
+                                           Foreground="#464554" FontFamily="Inter, Segoe UI"
+                                           FontSize="16" Padding="0" Margin="0,2,0,0"
+                                           VerticalContentAlignment="Center"/>
+                                </StackPanel>
+
+                                <!-- Header Actions: Refresh -->
+                                <Button x:Name="RefreshBtn" Grid.Column="1" Content="Refresh"
+                                        Style="{StaticResource RefreshButtonStyle}"
+                                        VerticalAlignment="Center"
+                                        Click="RefreshBtn_Click"/>
+                            </Grid>
+
+                            <!-- Empty State: Stepper Intro -->
+                            <Border x:Name="EmptyStateGrid" Grid.Row="1" Background="#FFFFFF"
+                                    BorderBrush="#F1F5F9" BorderThickness="1" CornerRadius="16"
+                                    Padding="28,24,28,24" Visibility="Visible">
+                                <StackPanel MaxWidth="560" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,6">
+                                        <Border Width="36" Height="36" CornerRadius="18" Background="#E1E0FF" Margin="0,0,10,0">
+                                            <Path Data="M7,12.5 L10.5,16 L17,8.5" Stroke="#4648D4" StrokeThickness="2.2"
+                                                  StrokeStartLineCap="Round" StrokeEndLineCap="Round"
+                                                  Width="14" Height="14" Stretch="Uniform"
+                                                  HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Border>
+                                        <TextBlock Text="Ready for Multiple Roblox Accounts" FontFamily="Inter, Segoe UI"
+                                                   FontWeight="SemiBold" FontSize="18" Foreground="#141B2B" VerticalAlignment="Center"/>
+                                    </StackPanel>
+
+                                    <TextBlock Text="Singleton mutex lock active. Launch game clients freely — sessions register automatically."
+                                               Foreground="#464554" FontFamily="Inter, Segoe UI" FontSize="14"
+                                               TextAlignment="Center" TextWrapping="Wrap" Margin="0,0,0,20"/>
+
+                                    <!-- 3 Step Cards -->
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <Border Grid.Column="0" Background="#F9F9FF" BorderBrush="#E9EDFF" BorderThickness="1" CornerRadius="12" Padding="14" Margin="0,0,6,0">
+                                            <StackPanel>
+                                                <TextBlock Text="1" FontFamily="Inter, Segoe UI" FontWeight="Bold" FontSize="13" Foreground="#4648D4" Margin="0,0,0,3"/>
+                                                <TextBlock Text="Launch Account 1" FontFamily="Inter, Segoe UI" FontWeight="SemiBold" FontSize="13" Foreground="#141B2B" Margin="0,0,0,3"/>
+                                                <TextBlock Text="Open main browser and join any experience." FontFamily="Inter, Segoe UI" FontSize="12" Foreground="#767586" TextWrapping="Wrap"/>
+                                            </StackPanel>
+                                        </Border>
+
+                                        <Border Grid.Column="1" Background="#F9F9FF" BorderBrush="#E9EDFF" BorderThickness="1" CornerRadius="12" Padding="14" Margin="3,0,3,0">
+                                            <StackPanel>
+                                                <TextBlock Text="2" FontFamily="Inter, Segoe UI" FontWeight="Bold" FontSize="13" Foreground="#4648D4" Margin="0,0,0,3"/>
+                                                <TextBlock Text="Launch Account 2" FontFamily="Inter, Segoe UI" FontWeight="SemiBold" FontSize="13" Foreground="#141B2B" Margin="0,0,0,3"/>
+                                                <TextBlock Text="Use Incognito or a 2nd browser profile." FontFamily="Inter, Segoe UI" FontSize="12" Foreground="#767586" TextWrapping="Wrap"/>
+                                            </StackPanel>
+                                        </Border>
+
+                                        <Border Grid.Column="2" Background="#F9F9FF" BorderBrush="#E9EDFF" BorderThickness="1" CornerRadius="12" Padding="14" Margin="6,0,0,0">
+                                            <StackPanel>
+                                                <TextBlock Text="3" FontFamily="Inter, Segoe UI" FontWeight="Bold" FontSize="13" Foreground="#4648D4" Margin="0,0,0,3"/>
+                                                <TextBlock Text="Multi-Box Active" FontFamily="Inter, Segoe UI" FontWeight="SemiBold" FontSize="13" Foreground="#141B2B" Margin="0,0,0,3"/>
+                                                <TextBlock Text="All sessions run concurrently here." FontFamily="Inter, Segoe UI" FontSize="12" Foreground="#767586" TextWrapping="Wrap"/>
+                                            </StackPanel>
+                                        </Border>
+                                    </Grid>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- Session List -->
+                            <ScrollViewer x:Name="InstancesScrollView" Grid.Row="1"
+                                          VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                                <StackPanel x:Name="WP1" HorizontalAlignment="Center" Width="640"/>
+                            </ScrollViewer>
+                        </Grid>
+
+                        <!-- VIEW B: SETUP GUIDE -->
+                        <ScrollViewer x:Name="InstructionsView" Visibility="Collapsed"
+                                      VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                            <StackPanel MaxWidth="672" HorizontalAlignment="Left" Margin="0,0,8,24">
+
+                                <!-- Page Header -->
+                                <StackPanel Margin="0,0,0,32">
+                                    <TextBlock Text="Setup Guide" FontFamily="Inter, Segoe UI" FontWeight="Bold"
+                                               FontSize="32" Foreground="#141B2B" LineHeight="40"/>
+                                    <TextBlock Text="Follow these steps in order. Multiple Roblox Instances must be open before Roblox launches."
+                                               Foreground="#464554" FontFamily="Inter, Segoe UI" FontSize="16"
+                                               TextWrapping="Wrap" MaxWidth="576" Margin="0,4,0,0"/>
+                                </StackPanel>
+
+                                <!-- Vertical Timeline Stepper -->
+                                <!-- Step 1: Close all Roblox instances -->
+                                <Grid Margin="0,0,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="56"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0" HorizontalAlignment="Center">
+                                        <Border Width="32" Height="32" CornerRadius="16" Background="#F9F9FF"
+                                                BorderBrush="#C7C4D7" BorderThickness="2">
+                                            <TextBlock Text="1" Foreground="#767586" FontFamily="Inter, Segoe UI" FontSize="12"
+                                                       FontWeight="Medium" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Border>
+                                        <Border Width="2" Height="40" Background="#DCE2F7" HorizontalAlignment="Center" Margin="0,0,0,0"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="1" Margin="12,4,0,32">
+                                        <TextBlock Text="Close All Roblox Instances" FontFamily="Inter, Segoe UI" FontWeight="SemiBold"
+                                                   FontSize="18" Foreground="#141B2B"/>
+                                        <TextBlock Text="Close every running Roblox instance first."
+                                                   Foreground="#464554" FontFamily="Inter, Segoe UI" FontSize="14" Margin="0,2,0,0"/>
+                                        <TextBlock Text="Warning: Roblox may minimise itself to your tray. If so, click Exit on the Roblox tray icon."
+                                                   Foreground="#767586" FontFamily="Inter, Segoe UI" FontSize="13" Margin="0,4,0,0" TextWrapping="Wrap"/>
+                                    </StackPanel>
+                                </Grid>
+
+                                <!-- Step 2: Run MRI first (important) -->
+                                <Grid Margin="0,0,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="56"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0" HorizontalAlignment="Center">
+                                        <Border Width="32" Height="32" CornerRadius="16" Background="#F9F9FF"
+                                                BorderBrush="#C7C4D7" BorderThickness="2">
+                                            <TextBlock Text="2" Foreground="#767586" FontFamily="Inter, Segoe UI" FontSize="12"
+                                                       FontWeight="Medium" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Border>
+                                        <Border Width="2" Height="40" Background="#DCE2F7" HorizontalAlignment="Center"/>
+                                    </StackPanel>
+                                    <Border Grid.Column="1" Margin="12,0,0,32" Background="#FFFFFF" BorderBrush="#DCE2F7"
+                                            BorderThickness="1" CornerRadius="12">
+                                        <Grid>
+                                            <Border Width="4" HorizontalAlignment="Left" Background="#4648D4" CornerRadius="12,0,0,12"/>
+                                            <StackPanel Margin="24,20,24,20">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Text="Run Multiple Roblox Instances" FontFamily="Inter, Segoe UI" FontWeight="SemiBold"
+                                                               FontSize="18" Foreground="#4648D4"/>
+                                                    <Border Margin="10,0,0,0" Padding="12,3,12,3" Background="#EDEDFC"
+                                                            CornerRadius="9999" VerticalAlignment="Center">
+                                                        <TextBlock Text="IMPORTANT" Foreground="#6063EE" FontFamily="Consolas, Segoe UI"
+                                                                   FontSize="11" FontWeight="SemiBold"/>
+                                                    </Border>
+                                                </StackPanel>
+                                                <TextBlock Text="Start Multiple Roblox Instances now. It must be open BEFORE you launch Roblox."
+                                                           Foreground="#464554" FontFamily="Inter, Segoe UI" FontSize="14" Margin="0,4,0,0" TextWrapping="Wrap"/>
+                                            </StackPanel>
+                                        </Grid>
+                                    </Border>
+                                </Grid>
+
+                                <!-- Step 3: Launch account X -->
+                                <Grid Margin="0,0,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="56"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0" HorizontalAlignment="Center">
+                                        <Border Width="32" Height="32" CornerRadius="16" Background="#F9F9FF"
+                                                BorderBrush="#C7C4D7" BorderThickness="2">
+                                            <TextBlock Text="3" Foreground="#767586" FontFamily="Inter, Segoe UI" FontSize="12"
+                                                       FontWeight="Medium" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Border>
+                                        <Border Width="2" Height="40" Background="#DCE2F7" HorizontalAlignment="Center"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="1" Margin="12,4,0,32">
+                                        <TextBlock Text="Launch Account X (Main)" FontFamily="Inter, Segoe UI" FontWeight="SemiBold"
+                                                   FontSize="18" Foreground="#141B2B"/>
+                                        <TextBlock Text="Open https://www.roblox.com/home in your web browser and launch Roblox from your main account. Wait for Roblox to launch."
+                                                   Foreground="#464554" FontFamily="Inter, Segoe UI" FontSize="14" Margin="0,2,0,0" TextWrapping="Wrap"/>
+                                    </StackPanel>
+                                </Grid>
+
+                                <!-- Step 4: Launch account Y -->
+                                <Grid Margin="0,0,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="56"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0" HorizontalAlignment="Center">
+                                        <Border Width="32" Height="32" CornerRadius="16" Background="#F9F9FF"
+                                                BorderBrush="#C7C4D7" BorderThickness="2">
+                                            <TextBlock Text="4" Foreground="#767586" FontFamily="Inter, Segoe UI" FontSize="12"
+                                                       FontWeight="Medium" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Border>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="1" Margin="12,4,0,0">
+                                        <TextBlock Text="Launch Account Y (Alt)" FontFamily="Inter, Segoe UI" FontWeight="SemiBold"
+                                                   FontSize="18" Foreground="#141B2B"/>
+                                        <TextBlock Text="Launch Roblox from your alt account in the browser. You must use a different Roblox account."
+                                                   Foreground="#464554" FontFamily="Inter, Segoe UI" FontSize="14" Margin="0,2,0,0" TextWrapping="Wrap"/>
+                                        <Border Background="#F9F9FF" BorderBrush="#DCE2F7" BorderThickness="1" CornerRadius="8" Padding="16" Margin="0,12,0,0">
+                                            <StackPanel>
+                                                <TextBlock Text="To switch accounts, you can:" Foreground="#516072" FontFamily="Inter, Segoe UI"
+                                                           FontSize="14" FontWeight="Medium" Margin="0,0,0,8"/>
+                                                <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
+                                                    <Path Data="M0,0 L1,0 M0.5,-0.5 L0.5,0.5" Stroke="#767586" StrokeThickness="1.5"
+                                                          Width="8" Height="8" Stretch="Uniform" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                                                    <TextBlock Text="Log out and log into a different account (not recommended)"
+                                                               Foreground="#464554" FontFamily="Inter, Segoe UI" FontSize="13" TextWrapping="Wrap"/>
+                                                </StackPanel>
+                                                <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
+                                                    <Path Data="M0,0 L1,0 M0.5,-0.5 L0.5,0.5" Stroke="#767586" StrokeThickness="1.5"
+                                                          Width="8" Height="8" Stretch="Uniform" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                                                    <TextBlock Text="Use Roblox's account switcher"
+                                                               Foreground="#464554" FontFamily="Inter, Segoe UI" FontSize="13" TextWrapping="Wrap"/>
+                                                </StackPanel>
+                                                <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
+                                                    <Path Data="M0,0 L1,0 M0.5,-0.5 L0.5,0.5" Stroke="#767586" StrokeThickness="1.5"
+                                                          Width="8" Height="8" Stretch="Uniform" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                                                    <TextBlock Text="Use a different browser profile"
+                                                               Foreground="#464554" FontFamily="Inter, Segoe UI" FontSize="13" TextWrapping="Wrap"/>
+                                                </StackPanel>
+                                                <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
+                                                    <Path Data="M0,0 L1,0 M0.5,-0.5 L0.5,0.5" Stroke="#767586" StrokeThickness="1.5"
+                                                          Width="8" Height="8" Stretch="Uniform" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                                                    <TextBlock Text="Use a browser extension to switch accounts"
+                                                               Foreground="#464554" FontFamily="Inter, Segoe UI" FontSize="13" TextWrapping="Wrap"/>
+                                                </StackPanel>
+                                                <StackPanel Orientation="Horizontal" Margin="0,0,0,0">
+                                                    <Path Data="M0,0 L1,0 M0.5,-0.5 L0.5,0.5" Stroke="#767586" StrokeThickness="1.5"
+                                                          Width="8" Height="8" Stretch="Uniform" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                                                    <TextBlock Text="Anything else that allows you to launch from a different Roblox account"
+                                                               Foreground="#464554" FontFamily="Inter, Segoe UI" FontSize="13" TextWrapping="Wrap"/>
+                                                </StackPanel>
+                                            </StackPanel>
+                                        </Border>
+                                    </StackPanel>
+                                </Grid>
+
+                            </StackPanel>
+                        </ScrollViewer>
+                    </Grid>
+
+                    <!-- Footer Status Bar -->
+                    <Border Grid.Row="2" Background="#FFFFFF" BorderBrush="#F1F5F9" BorderThickness="0,1,0,0">
+                        <Grid Margin="24,0,24,0">
+                            <TextBlock Text="v2.2.0" Foreground="#516072" FontFamily="Consolas, Segoe UI"
+                                       FontSize="11" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                            <TextBlock x:Name="UpdateAvailable" Text="Update Available" Foreground="#4648D4"
+                                       FontFamily="Inter, Segoe UI" FontSize="11" FontWeight="SemiBold"
+                                       VerticalAlignment="Center" HorizontalAlignment="Left" Margin="52,0,0,0"
+                                       Visibility="Collapsed"/>
+
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                                <TextBlock x:Name="MutexStatusText" Text="MUTEX: LOCKED" Foreground="#43474B"
+                                           FontFamily="Consolas, Segoe UI" FontSize="11" FontWeight="SemiBold" Margin="0,0,16,0"/>
+                                <TextBlock x:Name="CookieLockStatusText" Text="COOKIE ISOLATION: ACTIVE" Foreground="#43474B"
+                                           FontFamily="Consolas, Segoe UI" FontSize="11" FontWeight="SemiBold"/>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </Grid>
+            </Grid>
+        </Border>
     </Grid>
 </Window>

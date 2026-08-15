@@ -1,5 +1,4 @@
-﻿using System.IO;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
 
@@ -7,7 +6,6 @@ namespace MultipleRobloxInstances.Resources
 {
     public partial class RobloxInstance : UserControl
     {
-        public FileSystemWatcher Watcher = new FileSystemWatcher();
         // UI animations taken from MainDab
         public void Fade(DependencyObject ElementName, double Start, double End, double Time)
         {
